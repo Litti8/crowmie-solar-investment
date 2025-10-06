@@ -27,3 +27,10 @@ export interface ChartResponse {
   page: number;
   rows: number;
 }
+
+/**
+ * Interfaz extendida que incluye los datos procesados para el gráfico
+ */
+export interface ChartResponseWithProcessedData extends ChartResponse {
+  processedData: ChartDataPoint[];
+}

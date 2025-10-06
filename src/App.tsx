@@ -3,11 +3,15 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@components/common/ErrorBoundary';
 import { Header } from '@components/layout/Header';
 import { useProject } from '@hooks/useProject';
+import { useChartData } from '@hooks/useChartData';
 import { LoadingState } from '@components/common/LoadingState';
 import { ErrorState } from '@components/common/ErrorState';
+import { ProjectHeader } from '@components/project/ProjectHeader';
+import { InvestmentMetrics } from '@components/project/InvestmentMetrics';
+import { ProjectMap } from '@components/project/ProjectMap';
+import { ProjectChart } from '@components/project/ProjectChart';
 import { Box, Container, Typography, Card, CardContent } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { formatCurrency, formatPercentage } from '@utils/formatters';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,112 +24,119 @@ const queryClient = new QueryClient({
 });
 
 function ProjectTest() {
-  const { data: project, isLoading, error, refetch } = useProject('655c88d12c82187ff21c7bc2');
+  const projectId = '655c88d12c82187ff21c7bc2';
+  const { data: project, isLoading: projectLoading, error: projectError, refetch } = useProject(projectId);
+  const { data: chartData, isLoading: chartLoading } = useChartData(projectId);
 
-  if (isLoading) return <LoadingState />;
-  if (error) return <ErrorState message={error.message} onRetry={() => refetch()} />;
+  if (projectLoading || chartLoading) return <LoadingState />;
+  if (projectError) return <ErrorState message={projectError.message} onRetry={() => refetch()} />;
   if (!project) return <ErrorState message="No se encontró el proyecto" />;
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Header del proyecto */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h3" component="h1" gutterBottom>
-          {project.name}
-        </Typography>
-        <Typography variant="h6" color="text.secondary">
-          {project.address} • {project.power}
-        </Typography>
+      <ProjectHeader
+        name={project.name}
+        address={project.address}
+        power={project.power}
+        status={project.status}
+        mainImage={project.mainImage}
+      />
+
+      {/* Métricas de inversión */}
+      <Box sx={{ my: 4 }}>
+        <InvestmentMetrics
+          price={project.price}
+          tir={project.tir}
+          annualReturn={project.annual_return}
+          projectLife={project.project_life}
+          totalInvestors={project.totalInvestors}
+        />
       </Box>
 
-      {/* Métricas clave */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid size={{ xs: 6, md: 3 }}>
-          <Card>
+      <Grid container spacing={3}>
+        {/* Descripción */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Card sx={{ height: '100%' }}>
             <CardContent>
-              <Typography color="text.secondary" gutterBottom>
-                Inversión
+              <Typography variant="h5" gutterBottom fontWeight={600}>
+                Descripción del Proyecto
               </Typography>
-              <Typography variant="h5">
-                {formatCurrency(project.price)}
-              </Typography>
+              <Typography
+                variant="body1"
+                dangerouslySetInnerHTML={{ __html: project.descriptions.es }}
+                sx={{ '& p': { mb: 2 } }}
+              />
             </CardContent>
           </Card>
         </Grid>
 
-        <Grid size={{ xs: 6, md: 3 }}>
-          <Card>
+        {/* Mapa */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Card sx={{ height: '100%' }}>
             <CardContent>
-              <Typography color="text.secondary" gutterBottom>
-                TIR
+              <Typography variant="h5" gutterBottom fontWeight={600}>
+                Ubicación
               </Typography>
-              <Typography variant="h5" color="primary">
-                {formatPercentage(project.tir)}
-              </Typography>
+              <ProjectMap locations={project.locations} projectName={project.name} />
             </CardContent>
           </Card>
         </Grid>
 
-        <Grid size={{ xs: 6, md: 3 }}>
+        {/* Gráfico */}
+        <Grid size={{ xs: 12 }}>
           <Card>
             <CardContent>
-              <Typography color="text.secondary" gutterBottom>
-                Retorno Anual
+              <Typography variant="h5" gutterBottom fontWeight={600}>
+                Rendimiento del Proyecto
               </Typography>
-              <Typography variant="h5" color="success.main">
-                {formatPercentage(project.annual_return)}
-              </Typography>
+              {chartData?.processedData && (
+                <ProjectChart data={chartData.processedData} />
+              )}
             </CardContent>
           </Card>
         </Grid>
 
-        <Grid size={{ xs: 6, md: 3 }}>
+        {/* Promotores */}
+        <Grid size={{ xs: 12 }}>
           <Card>
             <CardContent>
-              <Typography color="text.secondary" gutterBottom>
-                Inversores
+              <Typography variant="h5" gutterBottom fontWeight={600}>
+                Promotores del Proyecto
               </Typography>
-              <Typography variant="h5">
-                {project.totalInvestors}
-              </Typography>
+              <Grid container spacing={2}>
+                {project.promoters.map((promoter) => (
+                  <Grid size={{ xs: 12, sm: 6, md: 4 }} key={promoter._id}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        border: 1,
+                        borderColor: 'divider',
+                        borderRadius: 2,
+                        transition: 'all 0.2s',
+                        '&:hover': {
+                          borderColor: 'primary.main',
+                          boxShadow: 2,
+                        },
+                      }}
+                    >
+                      <Typography variant="h6" fontWeight={600}>
+                        {promoter.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                        {promoter.type}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {promoter.description.substring(0, 100)}...
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-
-      {/* Descripción */}
-      <Card sx={{ mb: 4 }}>
-        <CardContent>
-          <Typography variant="h5" gutterBottom>
-            Descripción
-          </Typography>
-          <Typography 
-            variant="body1" 
-            dangerouslySetInnerHTML={{ __html: project.descriptions.es }}
-          />
-        </CardContent>
-      </Card>
-
-      {/* Promotores */}
-      <Card>
-        <CardContent>
-          <Typography variant="h5" gutterBottom>
-            Promotores
-          </Typography>
-          <Grid container spacing={2}>
-            {project.promoters.map((promoter) => (
-              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={promoter._id}>
-                <Box sx={{ p: 2, border: 1, borderColor: 'divider', borderRadius: 1 }}>
-                  <Typography variant="h6">{promoter.name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {promoter.type}
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </CardContent>
-      </Card>
     </Container>
   );
 }
