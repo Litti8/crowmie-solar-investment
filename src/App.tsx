@@ -23,11 +23,28 @@ function App() {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+          <Box 
+            sx={{ 
+              minHeight: '100vh', 
+              bgcolor: 'background.default',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+          >
             <Header />
-            <Suspense fallback={<LoadingState />}>
-              <ProjectDetailPage />
-            </Suspense>
+            <Box 
+              component="main" 
+              sx={{ 
+                flex: 1,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            >
+              <Suspense fallback={<LoadingState />}>
+                <ProjectDetailPage />
+              </Suspense>
+            </Box>
           </Box>
         </ThemeProvider>
       </QueryClientProvider>

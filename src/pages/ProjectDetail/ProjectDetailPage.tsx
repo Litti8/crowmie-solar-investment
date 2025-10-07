@@ -20,13 +20,18 @@ const ProjectDetailPage = () => {
   if (projectError) return <ErrorState message={projectError.message} onRetry={() => refetch()} />;
   if (!project) return <ErrorState message={t('errors.projectNotFound')} />;
 
-  // Seleccionar descripción según idioma actual
   const description = i18n.language === 'en' 
     ? project.descriptions.en 
     : project.descriptions.es;
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        py: 4,
+        mx: 'auto',
+      }}
+    >
       <ProjectHeader
         name={project.name}
         address={project.address}

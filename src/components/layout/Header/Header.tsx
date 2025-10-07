@@ -10,7 +10,7 @@ export const Header = () => {
 
   return (
     <AppBar position="sticky" elevation={2}>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ width: '100%' }}>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
