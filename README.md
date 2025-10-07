@@ -48,16 +48,16 @@ crowmie-solar-investment/
 
 ### Desarrollo local
 
-# Clonar repositorio
+### Clonar repositorio
 ```bash
 git clone https://github.com/Litti8/crowmie-solar-investment.git
 cd crowmie-solar-investment
 ```
-# Instalar dependencias
+### Instalar dependencias
 ```bash
 npm install
 ```
-# Configurar variables de entorno archivo `.env`
+### Configurar variables de entorno archivo `.env`
 ```env
 VITE_API_BASE_URL=<API_BASE_URL>
 VITE_ASSETS_URL=<ASSETS_URL>
@@ -65,7 +65,7 @@ VITE_ENABLE_CACHE=true
 VITE_CACHE_TTL=86400000
 ```
 
-# Iniciar servidor de desarrollo
+### Iniciar servidor de desarrollo
 ```bash
 npm run dev
 ```
