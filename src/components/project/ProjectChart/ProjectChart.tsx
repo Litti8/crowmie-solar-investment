@@ -1,6 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Box, Typography, useTheme } from '@mui/material';
 import { formatCurrency } from '@utils/formatters';
+import { useTranslation } from 'react-i18next';
 
 interface ChartData {
   date: Date;
@@ -18,12 +19,13 @@ interface ProjectChartProps {
 
 export const ProjectChart = ({ data }: ProjectChartProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   if (!data || data.length === 0) {
     return (
       <Box sx={{ p: 3, textAlign: 'center' }}>
         <Typography color="text.secondary">
-          No hay datos disponibles para el gráfico
+          {t('project.chart.noData')}
         </Typography>
       </Box>
     );
@@ -32,9 +34,9 @@ export const ProjectChart = ({ data }: ProjectChartProps) => {
   // Tomar solo los últimos 24 meses para mejor visualización
   const displayData = data.slice(-24).map(item => ({
     name: item.dateLabel,
-    Ingresos: item.revenues,
-    Gastos: Math.abs(item.expenses),
-    Beneficio: item.amount,
+    [t('project.chart.revenues')]: item.revenues,
+    [t('project.chart.expenses')]: Math.abs(item.expenses),
+    [t('project.chart.profit')]: item.amount,
   }));
 
   return (
@@ -66,21 +68,21 @@ export const ProjectChart = ({ data }: ProjectChartProps) => {
           <Legend />
           <Line
             type="monotone"
-            dataKey="Ingresos"
+            dataKey={t('project.chart.revenues')}
             stroke={theme.palette.success.main}
             strokeWidth={2}
             dot={false}
           />
           <Line
             type="monotone"
-            dataKey="Gastos"
+            dataKey={t('project.chart.expenses')}
             stroke={theme.palette.error.main}
             strokeWidth={2}
             dot={false}
           />
           <Line
             type="monotone"
-            dataKey="Beneficio"
+            dataKey={t('project.chart.profit')}
             stroke={theme.palette.primary.main}
             strokeWidth={3}
             dot={false}

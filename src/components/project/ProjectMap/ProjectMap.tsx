@@ -1,11 +1,10 @@
-import { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Location } from '@/types/project';
+import { useTranslation } from 'react-i18next';
 import 'leaflet/dist/leaflet.css';
 
-// Fix para iconos de Leaflet en Vite
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -24,21 +23,21 @@ interface ProjectMapProps {
 }
 
 export const ProjectMap = ({ locations, projectName }: ProjectMapProps) => {
-  const theme = useTheme();
+  const { t } = useTranslation();
 
   if (!locations || locations.length === 0) {
     return (
       <Box sx={{ p: 3, textAlign: 'center' }}>
         <Typography color="text.secondary">
-          No hay ubicación disponible
+          {t('project.map.noLocation')}
         </Typography>
       </Box>
     );
   }
 
-  // Usar la primera ubicación como centro
+  // Usar la primera ubicación como centro del mapa
   const center = {
-    lat: locations[0].longitude, // En el API están invertidos
+    lat: locations[0].longitude, // En la Api están invertidas
     lng: locations[0].latitude,
   };
 

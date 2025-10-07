@@ -1,0 +1,58 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Try again",
+    "noData": "No data available"
+  },
+  "header": {
+    "title": "Crowmie Solar",
+    "toggleTheme": "Toggle theme"
+  },
+  "project": {
+    "header": {
+      "location": "Location",
+      "power": "Power"
+    },
+    "metrics": {
+      "investment": "Total Investment",
+      "tir": "IRR",
+      "annualReturn": "Annual Return",
+      "duration": "Duration",
+      "years": "{{count}} years",
+      "investors": "Investors"
+    },
+    "sections": {
+      "description": "Project Description",
+      "location": "Location",
+      "performance": "Project Performance",
+      "promoters": "Project Promoters"
+    },
+    "chart": {
+      "revenues": "Revenues",
+      "expenses": "Expenses",
+      "profit": "Profit",
+      "noData": "No data available for chart"
+    },
+    "map": {
+      "noLocation": "No location available"
+    },
+    "status": {
+      "preparation": "In preparation",
+      "presale": "Presale",
+      "open": "Open",
+      "closed": "Closed",
+      "construction": "Under construction",
+      "production": "In production",
+      "sold": "Sold",
+      "canceled": "Canceled"
+    }
+  },
+  "errors": {
+    "somethingWrong": "Something went wrong",
+    "unexpectedError": "An unexpected error occurred. Please try again.",
+    "backHome": "Back to home",
+    "loadError": "Error loading data",
+    "projectNotFound": "Project not found"
+  }
+}

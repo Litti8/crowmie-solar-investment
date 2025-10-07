@@ -1,0 +1,58 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Intentar de nuevo",
+    "noData": "No hay datos disponibles"
+  },
+  "header": {
+    "title": "Crowmie Solar",
+    "toggleTheme": "Cambiar tema"
+  },
+  "project": {
+    "header": {
+      "location": "Ubicación",
+      "power": "Potencia"
+    },
+    "metrics": {
+      "investment": "Inversión Total",
+      "tir": "TIR",
+      "annualReturn": "Retorno Anual",
+      "duration": "Duración",
+      "years": "{{count}} años",
+      "investors": "Inversores"
+    },
+    "sections": {
+      "description": "Descripción del Proyecto",
+      "location": "Ubicación",
+      "performance": "Rendimiento del Proyecto",
+      "promoters": "Promotores del Proyecto"
+    },
+    "chart": {
+      "revenues": "Ingresos",
+      "expenses": "Gastos",
+      "profit": "Beneficio",
+      "noData": "No hay datos disponibles para el gráfico"
+    },
+    "map": {
+      "noLocation": "No hay ubicación disponible"
+    },
+    "status": {
+      "preparation": "En preparación",
+      "presale": "Preventa",
+      "open": "Abierto",
+      "closed": "Cerrado",
+      "construction": "En construcción",
+      "production": "En producción",
+      "sold": "Vendido",
+      "canceled": "Cancelado"
+    }
+  },
+  "errors": {
+    "somethingWrong": "Algo salió mal",
+    "unexpectedError": "Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.",
+    "backHome": "Volver al inicio",
+    "loadError": "Error al cargar",
+    "projectNotFound": "No se encontró el proyecto"
+  }
+}

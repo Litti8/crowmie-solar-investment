@@ -1,7 +1,7 @@
 import { Box, Typography, Chip } from '@mui/material';
 import { LocationOn, Power } from '@mui/icons-material';
 import { getAssetUrl } from '@services/api/client';
-import { PROJECT_STATUS_LABELS } from '@utils/constants';
+import { useTranslation } from 'react-i18next';
 
 interface ProjectHeaderProps {
   name: string;
@@ -18,6 +18,9 @@ export const ProjectHeader = ({
   status,
   mainImage,
 }: ProjectHeaderProps) => {
+
+  const { t } = useTranslation();
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'production':
@@ -33,9 +36,12 @@ export const ProjectHeader = ({
     }
   };
 
-  return (
+  const getStatusLabel = (status: string) => {
+    return t(`project.status.${status}`, status);
+  };
+
+    return (
     <Box>
-      {/* Imagen principal */}
       <Box
         sx={{
           width: '100%',
@@ -56,7 +62,7 @@ export const ProjectHeader = ({
           }}
         />
         <Chip
-          label={PROJECT_STATUS_LABELS[status as keyof typeof PROJECT_STATUS_LABELS] || status}
+          label={getStatusLabel(status)}
           color={getStatusColor(status)}
           sx={{
             position: 'absolute',
@@ -67,7 +73,6 @@ export const ProjectHeader = ({
         />
       </Box>
 
-      {/* Título y detalles */}
       <Typography variant="h3" component="h1" gutterBottom fontWeight={700}>
         {name}
       </Typography>

@@ -2,7 +2,7 @@ import { Card, CardContent, Typography, Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { TrendingUp, CalendarToday, Paid, People } from '@mui/icons-material';
 import { formatCurrency, formatPercentage } from '@utils/formatters';
-
+import { useTranslation } from 'react-i18next';
 import { ReactElement } from 'react';
 
 interface Metric {
@@ -27,33 +27,35 @@ export const InvestmentMetrics = ({
   projectLife,
   totalInvestors,
 }: InvestmentMetricsProps) => {
+  const { t } = useTranslation();
+
   const metrics: Metric[] = [
     {
-      label: 'Inversión Total',
+      label: t('project.metrics.investment'),
       value: formatCurrency(price),
       icon: <Paid sx={{ fontSize: 32 }} />,
       color: 'primary.main',
     },
     {
-      label: 'TIR',
+      label: t('project.metrics.tir'),
       value: formatPercentage(tir),
       icon: <TrendingUp sx={{ fontSize: 32 }} />,
       color: 'success.main',
     },
     {
-      label: 'Retorno Anual',
+      label: t('project.metrics.annualReturn'),
       value: formatPercentage(annualReturn),
       icon: <TrendingUp sx={{ fontSize: 32 }} />,
       color: 'info.main',
     },
     {
-      label: 'Duración',
-      value: `${projectLife} años`,
+      label: t('project.metrics.duration'),
+      value: t('project.metrics.years', { count: projectLife }),
       icon: <CalendarToday sx={{ fontSize: 32 }} />,
       color: 'warning.main',
     },
     {
-      label: 'Inversores',
+      label: t('project.metrics.investors'),
       value: totalInvestors.toString(),
       icon: <People sx={{ fontSize: 32 }} />,
       color: 'secondary.main',

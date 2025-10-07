@@ -1,5 +1,6 @@
 import { Box, Typography, Button, Container } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface ErrorStateProps {
   message?: string;
@@ -7,9 +8,11 @@ interface ErrorStateProps {
 }
 
 export const ErrorState = ({ 
-  message = 'No se pudieron cargar los datos',
+  message,
   onRetry 
 }: ErrorStateProps) => {
+  const { t } = useTranslation();
+  
   return (
     <Container maxWidth="sm">
       <Box
@@ -25,14 +28,14 @@ export const ErrorState = ({
       >
         <ErrorOutline sx={{ fontSize: 60, color: 'error.main' }} />
         <Typography variant="h5" component="h2">
-          Error al cargar
+          {t('errors.loadError')}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          {message}
+          {message || t('errors.unexpectedError')}
         </Typography>
         {onRetry && (
           <Button variant="contained" onClick={onRetry}>
-            Intentar de nuevo
+            {t('common.retry')}
           </Button>
         )}
       </Box>

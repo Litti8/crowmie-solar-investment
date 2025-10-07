@@ -1,9 +1,12 @@
 import { AppBar, Toolbar, Typography, IconButton, Box, Container } from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { useThemeMode } from '@contexts/ThemeContext';
+import { LanguageSelector } from '@components/common/LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 export const Header = () => {
   const { mode, toggleTheme } = useThemeMode();
+  const { t } = useTranslation();
 
   return (
     <AppBar position="sticky" elevation={2}>
@@ -18,14 +21,15 @@ export const Header = () => {
               letterSpacing: '-0.5px',
             }}
           >
-            Crowmie Solar
+            {t('header.title')}
           </Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <LanguageSelector />
             <IconButton
               onClick={toggleTheme}
               color="inherit"
-              aria-label="toggle theme"
+              aria-label={t('header.toggleTheme')}
             >
               {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
             </IconButton>
